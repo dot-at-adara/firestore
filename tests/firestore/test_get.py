@@ -2,7 +2,7 @@ import pytest
 from google.api_core.exceptions import FailedPrecondition
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture()
 def setup_objects(collection_name, object_attributes):
     from framework.firestore import create_object, create_db_client
     from tests.firestore.conftest import delete_collection_documents
