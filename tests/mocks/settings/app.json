@@ -1,0 +1,5 @@
+{
+  "service_name": "framework",
+  "environment": "test",
+  "project_id": "dot-sandbox"
+}

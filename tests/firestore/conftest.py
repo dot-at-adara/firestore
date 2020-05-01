@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.fixture(scope='session')
-def collection_name():
+def collection_name(app_settings):
     return 'test'
 
 
