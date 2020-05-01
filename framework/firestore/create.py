@@ -1,11 +1,9 @@
-def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None, publish=False,
+def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
                   message_formatter=None, user_id=None):
-    from handlers.core.common import generate_random_id, generate_hash_id
-    from handlers.core.collections import publish_record_update
-    from server import collections, collection_schemas
-    from handlers.core.firestore.base import create_db_client
-    from handlers.core.firestore.get import get_objects
-
+    from framework.core.common import generate_random_id, generate_hash_id
+    from framework.firestore.utilities import generate_collection_firestore_name
+    from framework.firestore.base import create_db_client
+    from framework.firestore.get import get_objects
     from datetime import datetime
     from copy import deepcopy
     db = create_db_client()
@@ -29,6 +27,7 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
     elif hash_id:
         object_id = generate_hash_id(data={i: attributes[i] for i in unique_keys})
     else:
+        print(unique_keys, '\nattr=', attributes)
         existing_objects = get_objects(
             collection_name=collection_name, active=True, **{"eq_{0}".format(i): attributes[i] for i in unique_keys}
         )
@@ -39,18 +38,12 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
     attributes['created'] = now
     attributes['updated'] = now
     attributes['active'] = True
-    doc_ref = db.collection(collections[collection_name]).document(attributes['id'])
-
+    collection_name=  generate_collection_firestore_name(collection_name=collection_name)
+    doc_ref = db.collection(collection_name).document(attributes['id'])
     if batch is not None:
         batch.set(doc_ref, attributes, merge=True)
     else:
         doc_ref.set(attributes, merge=True)
-    if publish:
-        published_message = deepcopy(attributes)
-        if message_formatter is not None:
-            published_message = message_formatter(published_message)
-        publish_record_update(record_id=attributes['id'], properties=published_message, collection_name=collection_name,
-                              action='add')
     if batch is not None:
         return attributes, batch
     else:

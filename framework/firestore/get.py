@@ -14,18 +14,18 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
     :param kwargs:
     :return:
     """
-    from server import collections, app_settings
-    from handlers.core.firestore.base import create_db_client
-    from handlers.core.collections import generate_collection_firestore_name
-    from handlers.core.common import manage_retries
+    from framework.firestore.base import create_db_client
+    from framework.core.settings import get_app_settings
+    from framework.firestore.utilities import generate_collection_firestore_name, manage_retries
     from google.cloud.exceptions import ServiceUnavailable
+    app_settings = get_app_settings()
     db = create_db_client()
-    doc_ref = db.collection(collections[collection_name])
+    doc_ref = db.collection(generate_collection_firestore_name(collection_name=collection_name))
     test_ref = None
 
     if app_settings['environment'] == 'test':
         test_ref = db.collection(
-            generate_collection_firestore_name(app_settings=app_settings, prefix='', collection_name=collection_name))
+            generate_collection_firestore_name(collection_name=collection_name))
     doc_ref, test_ref, filters = apply_filters(doc_ref=doc_ref, test_ref=test_ref, filters=kwargs,
                                                active=active)
     doc_ref, test_ref, sort_keys = handle_sort(doc_ref=doc_ref, test_ref=test_ref, filters=filters,
@@ -33,8 +33,10 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
                                                collection_name=collection_name)
     if isinstance(limit, int):
         doc_ref = doc_ref.limit(limit)
+
     if isinstance(cursor_id, str):
-        cursor = get_cursor(cursor_id=cursor_id, active=active, sort_keys=sort_keys, filters=filters)
+        cursor = get_cursor(cursor_id=cursor_id, active=active,
+                            sort_keys=sort_keys, filters=filters)
         if cursor.get('object') is None:
             return [], None
         else:
@@ -55,8 +57,7 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
         else:
             last_object = None
         cursor_id = update_cursor(collection_name=collection_name, active=active, last_object=last_object,
-                                  page=page + 1,
-                                  cursor_id=cursor_id, filters=filters, sort_keys=sort_keys)
+                                  page=page + 1, cursor_id=cursor_id, filters=filters, sort_keys=sort_keys)
         if limit is None or not documents or len(documents) < limit:
             cursor_id = None
         return [i.to_dict() for i in documents], cursor_id
@@ -64,10 +65,12 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
         return [i.to_dict() for i in documents]
 
 
-def update_cursor(collection_name, active, sort_keys, filters, last_object=None, cursor_id=None, page=0, ):
-    from server import collections
-    from handlers.core.firestore.base import create_db_client
-    from handlers.core.common import generate_random_id
+def update_cursor(collection_name, active, sort_keys, filters, last_object=None, cursor_id=None,
+                  page=0, ):
+    from framework.firestore.base import create_db_client
+    from framework.core.common import generate_random_id
+    from framework.firestore.utilities import generate_collection_firestore_name
+    cursor_collection_name = generate_collection_firestore_name(collection_name='cursors')
     if last_object is not None:
         attributes = dict(object=last_object.to_dict(), page=page)
     else:
@@ -79,16 +82,16 @@ def update_cursor(collection_name, active, sort_keys, filters, last_object=None,
         attributes['active'] = active
         attributes['sort_keys'] = sort_keys
     db = create_db_client()
-    db.collection(collections['cursors']).document(cursor_id).set(attributes, merge=True)
+    db.collection(cursor_collection_name).document(cursor_id).set(attributes, merge=True)
     return cursor_id
 
 
 def get_cursor(cursor_id, active, sort_keys, filters):
-    from server import collections
-    from handlers.core.firestore.base import create_db_client
-
+    from framework.firestore.base import create_db_client
+    from framework.firestore.utilities import generate_collection_firestore_name
+    cursor_collection_name = generate_collection_firestore_name(collection_name='cursors')
     db = create_db_client()
-    cursor = db.collection(collections['cursors']).document(cursor_id).get().to_dict()
+    cursor = db.collection(cursor_collection_name).document(cursor_id).get().to_dict()
     if not cursor:
         raise ValueError("Cursor does not exist")
     if cursor['query_attributes'] != filters or cursor['active'] != active or cursor['sort_keys'] != sort_keys:
@@ -114,7 +117,7 @@ def apply_filters(doc_ref, test_ref, filters, active):
         operation = operation_map[k.split('_')[0]] if 'eq_in' not in k else operation_map['_'.join(k.split('_')[:2])]
 
         if test_ref is not None:
-            test_key= '_'.join(k.split('_')[1:]) if 'eq_in' not in k else '_'.join(k.split('_')[2:])
+            test_key = '_'.join(k.split('_')[1:]) if 'eq_in' not in k else '_'.join(k.split('_')[2:])
             test_ref = test_ref.where(test_key, operation, v)
             if not (k.startswith('gt') or k.startswith('lt')):
                 doc_ref = doc_ref.where(key, operation, v)
@@ -142,6 +145,7 @@ def handle_sort(doc_ref, test_ref, filters, collection_name, sort_keys):
 
 def get_all_objects(collection_name: str, active=True, limit=1000, **kwargs):
     all_objects = list()
+
     objects, cursor_id = get_objects(collection_name=collection_name, active=active, limit=limit, create_cursor=True,
                                      **kwargs)
     if objects:

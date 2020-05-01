@@ -9,15 +9,15 @@ def format_update_message(attributes):
     return update
 
 
-def update_object(collection_name: str, object_id, attributes: dict, batch=None, publish=False, message_formatter=None,
+def update_object(collection_name: str, object_id, attributes: dict, batch=None, message_formatter=None,
                   user_id=None, upsert=False, override=False, overwrite_updated=False):
-    from handlers.core.collections import publish_record_update
-    from handlers.core.firestore.base import create_db_client
-    from server import collections, collection_schemas
+    from framework.firestore.base import create_db_client
+    from framework.firestore.utilities import generate_collection_firestore_name
     from datetime import datetime
     from copy import deepcopy
+    collection_name = generate_collection_firestore_name(collection_name=collection_name)
     db = create_db_client()
-    doc_ref = db.collection(collections[collection_name]).document(object_id)
+    doc_ref = db.collection(collection_name).document(object_id)
     now = datetime.utcnow()
     attributes = deepcopy(attributes)
     if not overwrite_updated:
@@ -38,27 +38,12 @@ def update_object(collection_name: str, object_id, attributes: dict, batch=None,
             doc_ref.update(attributes)
     if not batch:
         attributes = doc_ref.get().to_dict()
-    if publish and batch is None:
-        published_message = deepcopy(attributes)
-        if message_formatter is not None:
-            published_message = message_formatter(published_message)
-        publish_record_update(record_id=published_message['id'], properties=published_message,
-                              collection_name=collection_name,
-                              action='update')
-    elif publish and batch is not None:
-        raise ValueError("Cannot publish updates in batch mode as they have not been committed yet")
-    if batch is not None:
-        return attributes, batch
     else:
-        return attributes
+        return attributes, batch
+    return attributes
 
 
-def delete_object(collection_name, object_id, publish=False, batch=None, user_id=None):
-    from handlers.core.collections import publish_record_update
+def delete_object(collection_name, object_id, batch=None, user_id=None):
     attributes = dict(id=object_id, active=False)
-    results = update_object(collection_name=collection_name, object_id=object_id, attributes=attributes, batch=batch,
-                            publish=False)
-    if publish:
-        publish_record_update(record_id=attributes['id'], properties=attributes, collection_name=collection_name,
-                              action='delete')
+    results = update_object(collection_name=collection_name, object_id=object_id, attributes=attributes, batch=batch)
     return results

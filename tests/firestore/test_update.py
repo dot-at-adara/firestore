@@ -2,10 +2,9 @@ import pytest
 
 
 def test_update_single_record(object_attributes, collection_name):
-    from framework.firestore import update_object, create_object, get_objects
+    from framework.firestore import update_object, create_object
     object_attributes = {k: v for k, v in object_attributes.items() if k not in ['id']}
-    obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,
-                        publish=True)
+    obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes)
     assert len(obj['sub_object'].keys()) == 2
     update_attributes = dict(sub_object=dict(attributes_3='New attributes'))
     updated_obj = update_object(collection_name=collection_name, object_id=obj['id'], attributes=update_attributes)
@@ -13,10 +12,9 @@ def test_update_single_record(object_attributes, collection_name):
 
 
 def test_update_single_record_override(object_attributes, collection_name):
-    from framework.firestore import update_object, create_object, get_objects
+    from framework.firestore import update_object, create_object
     object_attributes = {k: v for k, v in object_attributes.items() if k not in ['id']}
-    obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,
-                        publish=True)
+    obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes)
     assert len(obj['sub_object'].keys()) == 2
     update_attributes = dict(sub_object=dict(attributes_3='New attributes'))
     updated_obj = update_object(collection_name=collection_name, object_id=obj['id'], attributes=update_attributes,

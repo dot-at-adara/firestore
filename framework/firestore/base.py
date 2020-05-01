@@ -6,24 +6,24 @@ def create_db_client(refresh=False):
 
     :return: firestore client
     """
+    from framework.core.settings import get_app_settings
     from google.cloud import firestore
+
+    app_settings = get_app_settings()
     global __db_client__
     if not __db_client__ or refresh:
-        from server import db_settings, app_settings
-        __db_client__ = firestore.Client(project=app_settings['project_id'],
-                                         database=db_settings['db_name'])
+        __db_client__ = firestore.Client(project=app_settings['project_id'])
     return __db_client__
 
 
 def define_indices(collections, app_settings):
-    from handlers.core.collections import generate_collection_firestore_name
+    from framework.firestore.utilities import generate_collection_firestore_name
     indices = list()
     for collection in collections.values():
         for index in collection.get('indices', []):
             indices.append(
                 {
-                    "collectionGroup": generate_collection_firestore_name(app_settings=app_settings, prefix='',
-                                                                          collection_name=collection['name']),
+                    "collectionGroup": generate_collection_firestore_name(collection_name=collection['name']),
                     "queryScope": "COLLECTION",
                     "fields": [
                         dict(fieldPath=k, order=v) for k, v in index.items()

@@ -2,9 +2,10 @@ import pytest
 
 
 def test_create_object_existing_id(object_attributes, collection_name):
-    from framework.firestore import create_object, get_objects, update_object, delete_object
-    from tests.utilities.common import delete_test_collections, generate_random_id
-    print(object_attributes)
+    from framework.firestore import create_object, get_objects
+    from tests.firestore.conftest import delete_collection_documents
+    from framework.core.common import  generate_random_id
+
     object_attributes['id'] = generate_random_id()
     obj = create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes)
     assert len(object_attributes.keys()) < len(obj.keys())
@@ -13,14 +14,14 @@ def test_create_object_existing_id(object_attributes, collection_name):
     assert len(objects) == 1
     with pytest.raises(ValueError):
         create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes)
-    delete_test_collections()
-    delete_test_collections()
+    delete_collection_documents(collection=collection_name)
+    delete_collection_documents(collection=collection_name)
+
 
 
 def test_create_object_hash_id_overrides_existing_object(object_attributes, collection_name):
-    from framework.firestore import create_object, get_objects, update_object, delete_object
-    from tests.utilities.common import delete_test_collections, generate_hash_id
-    print(object_attributes)
+    from framework.firestore import create_object
+    from framework.core.common import generate_hash_id
     obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,
                         hash_id=True)
     assert isinstance(obj, dict)
@@ -31,7 +32,7 @@ def test_create_object_hash_id_overrides_existing_object(object_attributes, coll
 
 
 def test_create_batch_hash_ids(object_attributes, collection_name):
-    from framework.firestore import create_object, get_objects, update_object, delete_object
+    from framework.firestore import create_object, get_objects
     from framework.firestore import create_db_client
     from copy import deepcopy
     db = create_db_client()
