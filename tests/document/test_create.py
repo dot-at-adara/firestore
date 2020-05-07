@@ -2,9 +2,9 @@ import pytest
 
 
 def test_create_object_existing_id(object_attributes, collection_name):
-    from framework.firestore import create_object, get_objects
-    from tests.firestore.conftest import delete_collection_documents
-    from framework.core.common import  generate_random_id
+    from stratus_api.document import create_object, get_objects
+    from tests.document.conftest import delete_collection_documents
+    from stratus_api.core.common import  generate_random_id
 
     object_attributes['id'] = generate_random_id()
     obj = create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes)
@@ -20,9 +20,9 @@ def test_create_object_existing_id(object_attributes, collection_name):
 
 
 def test_create_object_hash_id_overrides_existing_object(object_attributes, collection_name):
-    from framework.firestore import create_object
-    from framework.core.common import generate_hash_id
-    from tests.firestore.conftest import delete_collection_documents
+    from stratus_api.document import create_object
+    from stratus_api.core.common import generate_hash_id
+    from tests.document.conftest import delete_collection_documents
     obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,
                         hash_id=True)
     assert isinstance(obj, dict)
@@ -35,9 +35,9 @@ def test_create_object_hash_id_overrides_existing_object(object_attributes, coll
 
 
 def test_create_batch_hash_ids(object_attributes, collection_name):
-    from framework.firestore import create_object, get_objects
-    from framework.firestore import create_db_client
-    from tests.firestore.conftest import delete_collection_documents
+    from stratus_api.document import create_object, get_objects
+    from stratus_api.document import create_db_client
+    from tests.document.conftest import delete_collection_documents
     delete_collection_documents(collection=collection_name)
     delete_collection_documents(collection=collection_name)
     from copy import deepcopy

@@ -14,9 +14,9 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
     :param kwargs:
     :return:
     """
-    from framework.firestore.base import create_db_client
-    from framework.core.settings import get_app_settings
-    from framework.firestore.utilities import generate_collection_firestore_name, manage_retries
+    from stratus_api.document.base import create_db_client
+    from stratus_api.core.settings import get_app_settings
+    from stratus_api.document.utilities import generate_collection_firestore_name, manage_retries
     from google.cloud.exceptions import ServiceUnavailable
     app_settings = get_app_settings()
     db = create_db_client()
@@ -67,9 +67,9 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
 
 def update_cursor(collection_name, active, sort_keys, filters, last_object=None, cursor_id=None,
                   page=0, ):
-    from framework.firestore.base import create_db_client
-    from framework.core.common import generate_random_id
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document.base import create_db_client
+    from stratus_api.core.common import generate_random_id
+    from stratus_api.document.utilities import generate_collection_firestore_name
     cursor_collection_name = generate_collection_firestore_name(collection_name='cursors')
     if last_object is not None:
         attributes = dict(object=last_object.to_dict(), page=page)
@@ -87,8 +87,8 @@ def update_cursor(collection_name, active, sort_keys, filters, last_object=None,
 
 
 def get_cursor(cursor_id, active, sort_keys, filters):
-    from framework.firestore.base import create_db_client
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document.base import create_db_client
+    from stratus_api.document.utilities import generate_collection_firestore_name
     cursor_collection_name = generate_collection_firestore_name(collection_name='cursors')
     db = create_db_client()
     cursor = db.collection(cursor_collection_name).document(cursor_id).get().to_dict()

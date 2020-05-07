@@ -1,5 +1,5 @@
 def generate_collection_firestore_name(collection_name, prefix=''):
-    from framework.core.settings import get_app_settings
+    from stratus_api.core.settings import get_app_settings
     app_settings = get_app_settings()
     return "{0}-{1}-{2}{3}".format(app_settings['service_name'], app_settings['environment'], prefix, collection_name)
 

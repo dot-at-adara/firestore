@@ -11,8 +11,8 @@ def format_update_message(attributes):
 
 def update_object(collection_name: str, object_id, attributes: dict, batch=None, message_formatter=None,
                   user_id=None, upsert=False, override=False, overwrite_updated=False):
-    from framework.firestore.base import create_db_client
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document.base import create_db_client
+    from stratus_api.document.utilities import generate_collection_firestore_name
     from datetime import datetime
     from copy import deepcopy
     collection_name = generate_collection_firestore_name(collection_name=collection_name)
