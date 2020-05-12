@@ -3,12 +3,12 @@ import setuptools
 # with open("README.md", "r") as fh:
 #     long_description = fh.read()
 
-with open('requirements.txt') as f:
-    requirements = f.readlines()
+# with open('requirements.txt') as f:
+#     requirements = f.readlines()
 
 setuptools.setup(
     name="stratus-api-document",  # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="DOT",
     author_email="dot@adara.com",
     description="An API stratus_api for simplified development",
@@ -17,7 +17,11 @@ setuptools.setup(
     include_package_data=True,
     url="https://github.com/dot-at-adara/firestore",
     setup_requires=['pytest-runner'],
-    test_requires=requirements,
+    test_requires=[
+        "google-api-python-client>=1.7.11",
+        "google-cloud-firestore>=1.6.2",
+        "stratus-api-core>=0.0.3"
+    ],
     packages=setuptools.find_namespace_packages(include=['stratus_api.*']),
     classifiers=[
         "Programming Language :: Python :: 3",
