@@ -85,6 +85,22 @@ def test_get_object_cursor(setup_objects, collection_name):
     assert cursor_id is None
 
 
+def test_get_object_with_full_collection_name(object_attributes, full_collection_name):
+    from framework.firestore import create_object, get_objects
+    from tests.firestore.conftest import delete_collection_documents
+    from framework.firestore.utilities import generate_collection_firestore_name
+    from framework.core.common import generate_random_id
+    object_attributes['id'] = generate_random_id()
+    collection_name = generate_collection_firestore_name(full_collection_name, full_collection_name=True)
+    obj = create_object(collection_name=collection_name, full_collection_name=True, unique_keys=['id'],
+                        attributes=object_attributes)
+    assert isinstance(obj, dict)
+    get_obj = get_objects(collection_name=collection_name, full_collection_name=True, eq_id=object_attributes['id'])
+    assert len(get_obj) == 1
+    delete_collection_documents(collection=collection_name)
+    delete_collection_documents(collection=collection_name)
+
+
 def test_get_object_without_cursor(setup_objects, collection_name):
     from framework.firestore import get_objects
 

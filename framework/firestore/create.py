@@ -1,5 +1,5 @@
 def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
-                  message_formatter=None, user_id=None):
+                  message_formatter=None, user_id=None, full_collection_name=False):
     from framework.core.common import generate_random_id, generate_hash_id
     from framework.firestore.utilities import generate_collection_firestore_name
     from framework.firestore.base import create_db_client
@@ -14,11 +14,11 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
         existing_objects = []
         if other_unique_fields:
             existing_objects += get_objects(
-                collection_name=collection_name, active=False,
+                collection_name=collection_name, active=False, full_collection_name=full_collection_name,
                 **{"eq_{0}".format(i): attributes[i] for i in other_unique_fields}
             )
         existing_objects += get_objects(
-            collection_name=collection_name, active=False,
+            collection_name=collection_name, active=False, full_collection_name=full_collection_name,
             eq_id=attributes['id']
         )
         if existing_objects:
@@ -29,7 +29,8 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
     else:
         print(unique_keys, '\nattr=', attributes)
         existing_objects = get_objects(
-            collection_name=collection_name, active=True, **{"eq_{0}".format(i): attributes[i] for i in unique_keys}
+            collection_name=collection_name, full_collection_name=full_collection_name, active=True,
+            **{"eq_{0}".format(i): attributes[i] for i in unique_keys}
         )
         if existing_objects:
             raise ValueError("Conflict: object already exists")
@@ -38,7 +39,8 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
     attributes['created'] = now
     attributes['updated'] = now
     attributes['active'] = True
-    collection_name=  generate_collection_firestore_name(collection_name=collection_name)
+    collection_name = generate_collection_firestore_name(collection_name=collection_name,
+                                                         full_collection_name=full_collection_name)
     doc_ref = db.collection(collection_name).document(attributes['id'])
     if batch is not None:
         batch.set(doc_ref, attributes, merge=True)
