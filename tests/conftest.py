@@ -9,6 +9,6 @@ def test_directory():
 
 @pytest.fixture(scope='session', )
 def app_settings(test_directory):
-    from framework.core.settings import get_app_settings
+    from stratus_api.core.settings import get_app_settings
     import os
     return get_app_settings(env_folder=os.path.join(test_directory, 'mocks/settings'))

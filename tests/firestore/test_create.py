@@ -6,7 +6,7 @@ import pytest
 def test_create_object_existing_id(object_attributes, collection_name, full_collection_name_flag, get_test_collections):
     from framework.firestore import create_object, get_objects
     from tests.firestore.conftest import delete_collection_documents
-    from framework.core.common import generate_random_id
+    from stratus_api.core.common import generate_random_id
     from framework.firestore.utilities import generate_collection_firestore_name
 
     collection_name = get_test_collections[collection_name][0]
@@ -30,7 +30,7 @@ def test_create_object_existing_id(object_attributes, collection_name, full_coll
 
 def test_create_object_hash_id_overrides_existing_object(object_attributes, collection_name):
     from framework.firestore import create_object
-    from framework.core.common import generate_hash_id
+    from stratus_api.core.common import generate_hash_id
     from tests.firestore.conftest import delete_collection_documents
     obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,
                         hash_id=True)

@@ -22,7 +22,7 @@ def get_test_collections(collection_name, full_collection_name):
 
 @pytest.fixture()
 def object_attributes(collection_name):
-    from framework.core.common import generate_random_id
+    from stratus_api.core.common import generate_random_id
     delete_collection_documents(collection=collection_name)
     example = {
         "id": "bd5ac04c-32dc-4705-885d-81ae160079a7",

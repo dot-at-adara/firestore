@@ -1,6 +1,6 @@
 def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
                   message_formatter=None, user_id=None, full_collection_name=False):
-    from framework.core.common import generate_random_id, generate_hash_id
+    from stratus_api.core.common import generate_random_id, generate_hash_id
     from framework.firestore.utilities import generate_collection_firestore_name
     from framework.firestore.base import create_db_client
     from framework.firestore.get import get_objects

@@ -4,7 +4,7 @@ import pytest
 @pytest.mark.parametrize("collection_name,full_collection_name_flag",
                          [('collection_name', False), ('full_collection_name', True)])
 def test_update_single_record(object_attributes, collection_name, full_collection_name_flag, get_test_collections):
-    from framework.core.common import generate_random_id
+    from stratus_api.core.common import generate_random_id
     from framework.firestore import update_object, create_object
     from tests.firestore.conftest import delete_collection_documents
     from framework.firestore.utilities import generate_collection_firestore_name
@@ -27,7 +27,7 @@ def test_update_single_record(object_attributes, collection_name, full_collectio
 
 
 def test_update_single_record_override(object_attributes, collection_name):
-    from framework.core.common import generate_random_id
+    from stratus_api.core.common import generate_random_id
     from framework.firestore import update_object, create_object
     from tests.firestore.conftest import delete_collection_documents
     object_attributes = {k: v for k, v in object_attributes.items() if k not in ['id']}
@@ -48,3 +48,6 @@ def test_update_batch():
 
 def test_update_custom_message_handling():
     pass
+
+
+

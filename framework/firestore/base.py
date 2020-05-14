@@ -6,7 +6,7 @@ def create_db_client(refresh=False):
 
     :return: firestore client
     """
-    from framework.core.settings import get_app_settings
+    from stratus_api.core.settings import get_app_settings
     from google.cloud import firestore
 
     app_settings = get_app_settings()
