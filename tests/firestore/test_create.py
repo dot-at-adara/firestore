@@ -74,18 +74,3 @@ def test_create_batch_hash_ids(object_attributes, collection_name):
 
 def test_create_custom_message_handling():
     pass
-
-# def test_create_object_with_full_collection_name(object_attributes, full_collection_name):
-#     from framework.firestore import create_object, get_objects
-#     from tests.firestore.conftest import delete_collection_documents
-#     from framework.firestore.utilities import generate_collection_firestore_name
-#     from framework.core.common import generate_random_id
-#     object_attributes['id'] = generate_random_id()
-#     collection_name = generate_collection_firestore_name(full_collection_name, full_collection_name=True)
-#     obj = create_object(collection_name=collection_name, full_collection_name=True, unique_keys=['id'],
-#                         attributes=object_attributes)
-#     assert isinstance(obj, dict)
-#     get_obj = get_objects(collection_name=collection_name, full_collection_name=True, eq_id=object_attributes['id'])
-#     assert len(get_obj) == 1
-#     delete_collection_documents(collection=collection_name)
-#     delete_collection_documents(collection=collection_name)
