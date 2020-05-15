@@ -8,7 +8,7 @@ def collection_name(app_settings):
 
 @pytest.fixture()
 def object_attributes(collection_name):
-    from framework.core.common import generate_random_id
+    from stratus_api.core.common import generate_random_id
     delete_collection_documents(collection=collection_name)
     example = {
         "id": "bd5ac04c-32dc-4705-885d-81ae160079a7",
@@ -20,10 +20,10 @@ def object_attributes(collection_name):
 
 
 def delete_collection_documents(collection):
-    from framework.firestore import create_db_client
+    from stratus_api.document import create_db_client
     db = create_db_client()
     chunk_size = 10
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document.utilities import generate_collection_firestore_name
     collection = generate_collection_firestore_name(collection_name=collection)
     while chunk_size > 0:
         chunk_size = 0
