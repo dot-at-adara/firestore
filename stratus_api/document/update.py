@@ -10,12 +10,13 @@ def format_update_message(attributes):
 
 
 def update_object(collection_name: str, object_id, attributes: dict, batch=None, message_formatter=None,
-                  user_id=None, upsert=False, override=False, overwrite_updated=False):
+                  user_id=None, upsert=False, override=False, overwrite_updated=False, full_collection_name=False):
     from stratus_api.document.base import create_db_client
     from stratus_api.document.utilities import generate_collection_firestore_name
     from datetime import datetime
     from copy import deepcopy
-    collection_name = generate_collection_firestore_name(collection_name=collection_name)
+    collection_name = generate_collection_firestore_name(collection_name=collection_name,
+                                                         full_collection_name=full_collection_name)
     db = create_db_client()
     doc_ref = db.collection(collection_name).document(object_id)
     now = datetime.utcnow()
@@ -43,7 +44,8 @@ def update_object(collection_name: str, object_id, attributes: dict, batch=None,
     return attributes
 
 
-def delete_object(collection_name, object_id, batch=None, user_id=None):
+def delete_object(collection_name, object_id, batch=None, user_id=None, full_collection_name=False):
     attributes = dict(id=object_id, active=False)
-    results = update_object(collection_name=collection_name, object_id=object_id, attributes=attributes, batch=batch)
+    results = update_object(collection_name=collection_name, object_id=object_id, attributes=attributes, batch=batch,
+                            full_collection_name=full_collection_name)
     return results

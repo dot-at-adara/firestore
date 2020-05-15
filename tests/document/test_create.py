@@ -1,22 +1,31 @@
 import pytest
 
 
-def test_create_object_existing_id(object_attributes, collection_name):
+@pytest.mark.parametrize("collection_name,full_collection_name_flag",
+                         [('collection_name', False), ('full_collection_name', True)])
+def test_create_object_existing_id(object_attributes, collection_name, full_collection_name_flag, get_test_collections):
     from stratus_api.document import create_object, get_objects
     from tests.document.conftest import delete_collection_documents
-    from stratus_api.core.common import  generate_random_id
+    from stratus_api.core.common import generate_random_id
+    from stratus_api.document.utilities import generate_collection_firestore_name
 
+    collection_name = get_test_collections[collection_name][0]
+    generate_collection_name = generate_collection_firestore_name(collection_name=collection_name,
+                                                                  full_collection_name=full_collection_name_flag)
+    assert len(generate_collection_name.split('-')) == 3
     object_attributes['id'] = generate_random_id()
-    obj = create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes)
+    obj = create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes,
+                        full_collection_name=full_collection_name_flag)
     assert len(object_attributes.keys()) < len(obj.keys())
     assert object_attributes['id'] == obj['id']
-    objects = get_objects(collection_name=collection_name, eq_id=object_attributes['id'])
+    objects = get_objects(collection_name=collection_name, eq_id=object_attributes['id'],
+                          full_collection_name=full_collection_name_flag)
     assert len(objects) == 1
     with pytest.raises(ValueError):
-        create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes)
+        create_object(collection_name=collection_name, unique_keys=['id'], attributes=object_attributes,
+                      full_collection_name=full_collection_name_flag)
     delete_collection_documents(collection=collection_name)
     delete_collection_documents(collection=collection_name)
-
 
 
 def test_create_object_hash_id_overrides_existing_object(object_attributes, collection_name):

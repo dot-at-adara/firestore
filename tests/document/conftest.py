@@ -6,6 +6,20 @@ def collection_name(app_settings):
     return 'test'
 
 
+@pytest.fixture(scope='session')
+def full_collection_name(app_settings):
+    return "{0}-{1}-{2}{3}".format(app_settings['service_name'], app_settings['environment'], app_settings['prefix'],
+                                   'test')
+
+
+@pytest.fixture()
+def get_test_collections(collection_name, full_collection_name):
+    return dict(
+        collection_name=(collection_name, False),
+        full_collection_name=(full_collection_name, True)
+    )
+
+
 @pytest.fixture()
 def object_attributes(collection_name):
     from stratus_api.core.common import generate_random_id

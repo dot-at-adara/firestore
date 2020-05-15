@@ -1,5 +1,5 @@
 def get_objects(collection_name, active=True, limit=10, cursor_id=None,
-                create_cursor=False, sort_keys: list = None, page=None,
+                create_cursor=False, sort_keys: list = None, page=None, full_collection_name=False,
                 **kwargs):
     """
 
@@ -20,12 +20,14 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
     from google.cloud.exceptions import ServiceUnavailable
     app_settings = get_app_settings()
     db = create_db_client()
-    doc_ref = db.collection(generate_collection_firestore_name(collection_name=collection_name))
+    doc_ref = db.collection(
+        generate_collection_firestore_name(collection_name=collection_name, full_collection_name=full_collection_name))
     test_ref = None
 
     if app_settings['environment'] == 'test':
         test_ref = db.collection(
-            generate_collection_firestore_name(collection_name=collection_name))
+            generate_collection_firestore_name(collection_name=collection_name,
+                                               full_collection_name=full_collection_name))
     doc_ref, test_ref, filters = apply_filters(doc_ref=doc_ref, test_ref=test_ref, filters=kwargs,
                                                active=active)
     doc_ref, test_ref, sort_keys = handle_sort(doc_ref=doc_ref, test_ref=test_ref, filters=filters,
@@ -143,16 +145,17 @@ def handle_sort(doc_ref, test_ref, filters, collection_name, sort_keys):
     return doc_ref, test_ref, sort_keys
 
 
-def get_all_objects(collection_name: str, active=True, limit=1000, **kwargs):
+def get_all_objects(collection_name: str, active=True, limit=1000, full_collection_name=False, **kwargs):
     all_objects = list()
 
     objects, cursor_id = get_objects(collection_name=collection_name, active=active, limit=limit, create_cursor=True,
-                                     **kwargs)
+                                     full_collection_name=full_collection_name, **kwargs)
     if objects:
         all_objects.extend(objects)
     while len(objects) == limit:
         objects, cursor_id = get_objects(collection_name=collection_name, active=active, limit=limit,
-                                         create_cursor=True, cursor_id=cursor_id, **kwargs)
+                                         full_collection_name=full_collection_name, create_cursor=True,
+                                         cursor_id=cursor_id, **kwargs)
         if objects:
             all_objects.extend(objects)
     return all_objects
