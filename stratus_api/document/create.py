@@ -1,5 +1,5 @@
 def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
-                  message_formatter=None, user_id=None):
+                  message_formatter=None, user_id=None, full_collection_name=False):
     from stratus_api.core.common import generate_random_id, generate_hash_id
     from stratus_api.document.utilities import generate_collection_firestore_name
     from stratus_api.document.base import create_db_client
@@ -27,7 +27,6 @@ def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=
     elif hash_id:
         object_id = generate_hash_id(data={i: attributes[i] for i in unique_keys})
     else:
-        print(unique_keys, '\nattr=', attributes)
         existing_objects = get_objects(
             collection_name=collection_name, full_collection_name=full_collection_name, active=True,
             **{"eq_{0}".format(i): attributes[i] for i in unique_keys}

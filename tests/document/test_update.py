@@ -1,10 +1,18 @@
 import pytest
 
 
-def test_update_single_record(object_attributes, collection_name):
+@pytest.mark.parametrize("collection_name,full_collection_name_flag",
+                         [('collection_name', False), ('full_collection_name', True)])
+def test_update_single_record(object_attributes, collection_name, full_collection_name_flag, get_test_collections):
     from stratus_api.core.common import generate_random_id
     from stratus_api.document import update_object, create_object
     from tests.document.conftest import delete_collection_documents
+    from stratus_api.document.utilities import generate_collection_firestore_name
+
+    collection_name = get_test_collections[collection_name][0]
+    generate_collection_name = generate_collection_firestore_name(collection_name=collection_name,
+                                                                  full_collection_name=full_collection_name_flag)
+    assert len(generate_collection_name.split('-')) == 3
     object_attributes = {k: v for k, v in object_attributes.items() if k not in ['id']}
     object_attributes['sub_object'] = dict(object_1=generate_random_id(), object_2=generate_random_id())
     obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes,

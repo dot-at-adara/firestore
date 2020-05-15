@@ -86,9 +86,9 @@ def test_get_object_cursor(setup_objects, collection_name):
 
 
 def test_get_object_with_full_collection_name(object_attributes, full_collection_name):
-    from framework.firestore import create_object, get_objects
-    from tests.firestore.conftest import delete_collection_documents
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document import create_object, get_objects
+    from tests.document.conftest import delete_collection_documents
+    from stratus_api.document.utilities import generate_collection_firestore_name
     from stratus_api.core.common import generate_random_id
     object_attributes['id'] = generate_random_id()
     collection_name = generate_collection_firestore_name(full_collection_name, full_collection_name=True)
