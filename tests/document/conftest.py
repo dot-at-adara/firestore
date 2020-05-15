@@ -33,14 +33,12 @@ def object_attributes(collection_name):
     return {k: v for k, v in example.items() if k not in {'created', 'active', 'updated', 'id'}}
 
 
-def delete_collection_documents(collection, full_collection_name=False):
-    from framework.firestore import create_db_client
-    from framework.firestore.utilities import generate_collection_firestore_name
-    if not full_collection_name:
-        collection = generate_collection_firestore_name(collection_name=collection,
-                                                        full_collection_name=full_collection_name)
+def delete_collection_documents(collection):
+    from stratus_api.document import create_db_client
     db = create_db_client()
     chunk_size = 10
+    from stratus_api.document.utilities import generate_collection_firestore_name
+    collection = generate_collection_firestore_name(collection_name=collection)
     while chunk_size > 0:
         chunk_size = 0
         chunk = db.collection(collection).limit(100).get()

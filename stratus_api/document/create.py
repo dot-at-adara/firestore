@@ -1,9 +1,9 @@
 def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
-                  message_formatter=None, user_id=None, full_collection_name=False):
+                  message_formatter=None, user_id=None):
     from stratus_api.core.common import generate_random_id, generate_hash_id
-    from framework.firestore.utilities import generate_collection_firestore_name
-    from framework.firestore.base import create_db_client
-    from framework.firestore.get import get_objects
+    from stratus_api.document.utilities import generate_collection_firestore_name
+    from stratus_api.document.base import create_db_client
+    from stratus_api.document.get import get_objects
     from datetime import datetime
     from copy import deepcopy
     db = create_db_client()

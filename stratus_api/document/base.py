@@ -2,9 +2,9 @@ __db_client__ = None
 
 
 def create_db_client(refresh=False):
-    """Convenience function to create a firestore client
+    """Convenience function to create a document client
 
-    :return: firestore client
+    :return: document client
     """
     from stratus_api.core.settings import get_app_settings
     from google.cloud import firestore
@@ -17,7 +17,7 @@ def create_db_client(refresh=False):
 
 
 def define_indices(collections, app_settings):
-    from framework.firestore.utilities import generate_collection_firestore_name
+    from stratus_api.document.utilities import generate_collection_firestore_name
     indices = list()
     for collection in collections.values():
         for index in collection.get('indices', []):
@@ -38,8 +38,8 @@ def create_compound_indices(app_settings, collections):
     with open('.firebaserc', 'wt') as f:
         json.dump(dict(projects=dict(default=app_settings['project_id'])), f)
     indices = define_indices(collections=collections, app_settings=app_settings)
-    with open('firestore.indexes.json', 'wt') as f:
+    with open('document.indexes.json', 'wt') as f:
         json.dump({"indexes": indices}, f)
-    os.system("/apps/deployment/firebase-tools-linux deploy --only firestore:indexes --token {0}".format(
+    os.system("/apps/deployment/firebase-tools-linux deploy --only document:indexes --token {0}".format(
         app_settings['firebase_token']))
     return indices

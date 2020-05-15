@@ -4,8 +4,8 @@ from google.api_core.exceptions import FailedPrecondition
 
 @pytest.fixture()
 def setup_objects(collection_name, object_attributes):
-    from framework.firestore import create_object, create_db_client
-    from tests.firestore.conftest import delete_collection_documents
+    from stratus_api.document import create_object, create_db_client
+    from tests.document.conftest import delete_collection_documents
     delete_collection_documents(collection=collection_name)
     delete_collection_documents(collection=collection_name)
     obj = object_attributes
@@ -29,7 +29,7 @@ def setup_objects(collection_name, object_attributes):
 
 
 def test_get_object_no_filter_sorts_id_ascending(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
 
     objects = get_objects(collection_name=collection_name, sort_keys=['id_ascending'], active=False, limit=None)
     current_id = '0'
@@ -40,39 +40,39 @@ def test_get_object_no_filter_sorts_id_ascending(setup_objects, collection_name)
 
 
 def test_get_object_1_filter_no_sort(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     assert len(get_objects(collection_name=collection_name, eq_filter_1='high', limit=None)) == 10
 
 
 def test_get_object_bad_sort_no_index(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     with pytest.raises(FailedPrecondition):
         get_objects(collection_name=collection_name, eq_filter_1='high',
                     sort_keys=['id_ascending', 'created_descending'], limit=None)
 
 
 def test_get_object_multi_filter_sort(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     get_objects(collection_name=collection_name, eq_filter_1='high',
                 sort_keys=['filter_2_ascending', 'name_descending'], limit=None, active=False)
 
 
 def test_get_object_multi_filter_sort_wrong_order_fails(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     with pytest.raises(FailedPrecondition):
         get_objects(collection_name=collection_name, eq_filter_1='high',
                     sort_keys=['name_descending', 'filter_2_ascending'], limit=None, active=False)
 
 
 def test_get_object_partial_index_fails(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     with pytest.raises(FailedPrecondition):
         get_objects(collection_name=collection_name, eq_filter_1='high', sort_keys=['filter_2_ascending'], limit=None,
                     active=False)
 
 
 def test_get_object_cursor(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
     objects, cursor_id = get_objects(collection_name=collection_name, active=False, limit=10, create_cursor=True)
     assert len(objects) == 10
     new_objects, cursor_id = get_objects(collection_name=collection_name, active=False, limit=10, create_cursor=True,
@@ -102,12 +102,12 @@ def test_get_object_with_full_collection_name(object_attributes, full_collection
 
 
 def test_get_object_without_cursor(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
 
 
 def test_get_object_cursor_sort(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects
 
 
 def test_get_object_without_cursor_sort(setup_objects, collection_name):
-    from framework.firestore import get_objects
+    from stratus_api.document import get_objects

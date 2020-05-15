@@ -3,8 +3,8 @@ import pytest
 
 def test_single_object_flow(object_attributes, collection_name):
     from stratus_api.core.settings import get_app_settings
-    from framework.firestore import create_object, get_objects, update_object, delete_object
-    from tests.firestore.conftest import delete_collection_documents
+    from stratus_api.document import create_object, get_objects, update_object, delete_object
+    from tests.document.conftest import delete_collection_documents
 
     app_settings = get_app_settings()
     obj = create_object(collection_name=collection_name, unique_keys=['name'], attributes=object_attributes)
