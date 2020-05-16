@@ -8,7 +8,7 @@ import setuptools
 
 setuptools.setup(
     name="stratus-api-document",  # Replace with your own username
-    version="0.0.2",
+    version="0.0.3",
     author="DOT",
     author_email="dot@adara.com",
     description="An API stratus_api for simplified development",

@@ -29,3 +29,17 @@ def manage_retries(partial_function, handled_exceptions, propagate_exceptions, r
         else:
             success = True
     return results
+
+
+def delete_collection_documents(collection, full_collection_name=False):
+    from stratus_api.document import create_db_client
+    db = create_db_client()
+    chunk_size = 10
+    collection = generate_collection_firestore_name(collection_name=collection, full_collection_name=full_collection_name)
+    while chunk_size > 0:
+        chunk_size = 0
+        chunk = db.collection(collection).limit(100).get()
+        for document in chunk:
+            document.reference.delete()
+            chunk_size += 1
+    pass
