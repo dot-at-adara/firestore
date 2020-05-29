@@ -1,18 +1,39 @@
-def get_objects(collection_name, active=True, limit=10, cursor_id=None,
-                create_cursor=False, sort_keys: list = None, page=None, full_collection_name=False,
+"""
+get.py
+====================================
+The get module of of stratus_api document provides convenience functions to get objects from the firestore collections
+"""
+
+
+def get_objects(collection_name: str, active: bool = True, limit: int = 10, cursor_id: str = None,
+                create_cursor: bool = False, sort_keys: list = None, page: int = None,
+                full_collection_name: bool = False,
                 **kwargs):
     """
+    Convenience function to get list of objects under collection_name
 
-    :param collection_name:
-    :param active:
-    :param limit:
-    :param cursor_id:
-    :param create_cursor:
-    :param sort:
-    :param order:
-    :param page:
-    :param kwargs:
-    :return:
+    Args:
+        collection_name (str): example_collection
+        active (bool): True to get all the document that has active flag set to True
+        limit (int): number of objects in a single call
+        cursor_id (str): paginate queries by using cursors
+        create_cursor (bool): True if needed to create a pagination for the query
+        sort_keys (list): sort objects according to keys
+        page (int): page_number
+        full_collection_name (str): True if collection_name is an absolute name
+        kwargs: eq_id for get object that equals to id
+    Returns:
+        list: list of dictionary of objects
+    Examples:
+        >>> objects = get_objects(collection_name='example_collection',active=True,
+        >>>                       limit=2, full_collection_name=True)
+        >>> print(objects)
+        [{'active':True,'id':'example_id1', 'product_id':'example_product_id1',
+            'audience_id':'example_audience_id1'},
+        {'active':True,'id':'example_id2', 'product_id':'example_product_id2',
+            'audience_id':'example_audience_id2'}]
+        >>> print(len(objects))
+        2
     """
     from stratus_api.document.base import create_db_client
     from stratus_api.core.settings import get_app_settings
@@ -67,8 +88,31 @@ def get_objects(collection_name, active=True, limit=10, cursor_id=None,
         return [i.to_dict() for i in documents]
 
 
-def update_cursor(collection_name, active, sort_keys, filters, last_object=None, cursor_id=None,
-                  page=0, ):
+def update_cursor(collection_name: str, active: bool, sort_keys: list, filters: dict, last_object: dict = None,
+                  cursor_id: str = None, page: int = 0):
+    """
+    function to create/update cursor
+
+    Args:
+        collection_name (str): example_collection
+        active (bool): True to get all the document that has active flag set to True
+        sort_keys (list): sort objects according to keys
+        filters (dict): {'eq_active':True, 'eq_id':'example_id', 'gte_created':'05-27-2020'}
+        last_object (dict): last fetched document object
+        cursor_id (str): paginate queries by using cursor_id
+        page (int): page number
+    Returns:
+        str: cursor_id
+    Examples:
+        >>> last_object = {'active':True,'id':'example_id1', 'product_id':'example_product_id1',
+        >>>                'audience_id':'example_audience_id1'}
+        >>> filters = {'eq_active':True, 'eq_id':'example_id'}
+        >>> cursor_id = update_cursor(collection_name='example_collection', active=True,
+        >>>                           last_object=None, cursor_id=None, filters=filters,
+        >>>                           sort_keys=sort_keys)
+        >>> print(cursor_id)
+        '7d619685-e7a0-44ac-b635-random_id'
+    """
     from stratus_api.document.base import create_db_client
     from stratus_api.core.common import generate_random_id
     from stratus_api.document.utilities import generate_collection_firestore_name
@@ -88,7 +132,25 @@ def update_cursor(collection_name, active, sort_keys, filters, last_object=None,
     return cursor_id
 
 
-def get_cursor(cursor_id, active, sort_keys, filters):
+def get_cursor(cursor_id: str, active: bool, sort_keys: list, filters: dict):
+    """
+    returns cursor document from the cursors collection
+
+    Args:
+        cursor_id (str): document id under cursors collection
+        active (bool): True to get all the document that has active flag set to True
+        sort_keys (list): sort objects according to keys
+        filters (dict): {'eq_active':True, 'eq_id':'example_id', 'gte_created':'05-27-2020'}
+    Returns:
+        dict: cursor firestore document
+    Examples:
+        >>> cursor_id = '7d619685-e7a0-44ac-b635-random_id'
+        >>> filters = {'eq_active':True, 'eq_id':'example_id'}
+        >>> cursor = get_cursor(cursor_id=cursor_id, active=True,
+        >>>                     sort_keys=sort_keys, filters=filters)
+        >>> print(cursor)
+        {'active':True,'collection_name':'example_collection'}
+    """
     from stratus_api.document.base import create_db_client
     from stratus_api.document.utilities import generate_collection_firestore_name
     cursor_collection_name = generate_collection_firestore_name(collection_name='cursors')
@@ -101,7 +163,29 @@ def get_cursor(cursor_id, active, sort_keys, filters):
     return cursor
 
 
-def apply_filters(doc_ref, test_ref, filters, active):
+def apply_filters(doc_ref, test_ref, filters: dict, active: bool):
+    """
+    function that applies firestore filters such as ==, <, >=, <=, in, array_contains, array_contains_any for the query
+
+    Args:
+        doc_ref (object): doc_ref object
+        test_ref (object): test_ref object
+        filters (dict): {'eq_active':True, 'eq_id':'example_id', 'gte_created':'05-27-2020'}
+        active (bool): True to get all the document that has active flag set to True
+    Returns:
+        doc_ref(object), test_ref(object), filters(dict)
+    Examples:
+        >>> from stratus_api.document.base import create_db_client
+        >>> from stratus_api.document.utilities import generate_collection_firestore_name
+        >>> db = create_db_client()
+        >>> doc_ref = db.collection(generate_collection_firestore_name(collection_name='example_collection',
+        >>>                         full_collection_name=True))
+        >>> test_ref = None
+        >>> filters = {'eq_active':True, 'eq_id':'example_id'}
+        >>> doc_ref, test_ref, filters = apply_filters(doc_ref=doc_ref, test_ref=test_ref,
+        >>>                                            filters=filters, active=True)
+
+    """
     operation_map = dict(
         contains='array_contains',
         contains_any='array_contains_any',
@@ -129,7 +213,29 @@ def apply_filters(doc_ref, test_ref, filters, active):
     return doc_ref, test_ref, filters
 
 
-def handle_sort(doc_ref, test_ref, filters, collection_name, sort_keys):
+def handle_sort(doc_ref, test_ref, filters: dict, collection_name: str, sort_keys: list):
+    """
+    Performs order_by clause on the query
+
+    Args:
+        doc_ref (object): doc_ref object
+        test_ref (object): test_ref object
+        filters (dict): {'eq_active':True, 'eq_id':'example_id', 'gte_created':'05-27-2020'}
+        collection_name (str): example_collection
+        sort_keys (list): sort objects according to keys
+    Returns:
+        doc_ref(object), test_ref(object), filters(dict)
+    Examples:
+        >>> from stratus_api.document.base import create_db_client
+        >>> from stratus_api.document.utilities import generate_collection_firestore_name
+        >>> db = create_db_client()
+        >>> doc_ref = db.collection(generate_collection_firestore_name(collection_name='example_collection',
+        >>>                         full_collection_name=True))
+        >>> test_ref = None
+        >>> filters = {'eq_active':True, 'eq_id':'example_id'}
+        >>> doc_ref, test_ref, sort_keys = handle_sort(doc_ref=doc_ref, test_ref=test_ref, filters=filters,
+        >>>                                               collection_name='example_collection')
+    """
     if sort_keys is None:
         sort_keys = []
     for i in sort_keys:
@@ -145,7 +251,30 @@ def handle_sort(doc_ref, test_ref, filters, collection_name, sort_keys):
     return doc_ref, test_ref, sort_keys
 
 
-def get_all_objects(collection_name: str, active=True, limit=1000, full_collection_name=False, **kwargs):
+def get_all_objects(collection_name: str, active: bool = True, limit: int = 1000, full_collection_name: bool = False,
+                    **kwargs):
+    """
+    Convenience function to get list of all objects under collection_name
+
+    Args:
+        collection_name: example_collection
+        active: True to get all the document that has active flag set to True
+        limit: number of objects in a single call
+        full_collection_name: True if collection_name is an absolute name
+        kwargs: eq_id for get object that equals to id
+    Returns:
+        list: list of dictionary of objects
+    Examples:
+        >>> objects = get_all_objects(collection_name='example_collection',active=True,
+        >>>                           limit=2, full_collection_name=True)
+        >>> print(objects)
+        [{'active':True,'id':'example_id1', 'product_id':'example_product_id1',
+            'audience_id':'example_audience_id1'},
+        {'active':True,'id':'example_id2', 'product_id':'example_product_id2',
+            'audience_id':'example_audience_id2'}]
+        >>> print(len(objects))
+        2
+    """
     all_objects = list()
 
     objects, cursor_id = get_objects(collection_name=collection_name, active=active, limit=limit, create_cursor=True,

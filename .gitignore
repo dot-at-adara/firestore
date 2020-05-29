@@ -1,5 +1,5 @@
 venv/*
 .idea
 .coverage
-**/__pycache__/
+**/__pycache__
 client.json

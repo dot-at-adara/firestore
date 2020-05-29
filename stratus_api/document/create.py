@@ -1,5 +1,43 @@
-def create_object(collection_name, unique_keys: list, attributes: dict, hash_id=False, batch=None,
-                  message_formatter=None, user_id=None, full_collection_name=False):
+"""
+create.py
+====================================
+The create module of stratus_api document provides function to create a document in firestore collection
+"""
+
+
+def create_object(collection_name: str, unique_keys: list, attributes: dict, hash_id: bool = False,
+                  batch: object = None, message_formatter=None, user_id: str = None,
+                  full_collection_name: bool = False):
+    """
+    creates a document object in firestore collection_name with also having optional functionality to batch create
+
+    Args:
+        collection_name: example_collection
+        unique_keys: list of keys that needs to be unique for a collection
+        attributes: dictionary attributes object
+        hash_id: True if document id needs to be hash of unique_keys
+        batch: firestore batch object to create objects in batch mode
+        message_formatter:
+        user_id:
+        full_collection_name: True if collection_name is an absolute name
+    Returns:
+        attributes
+    Raises:
+        ValueError:
+            object already exists
+    Examples:
+        >>> attributes = dict(active=True, id='example_id', product_id='example_product_id',
+        >>>                   audience_id='example_audience_id')
+        >>> print(create_object(collection_name='example_collection',unique_keys=['id','product_id'],
+        >>>                     attributes=attributes, full_collection_name=True)
+        >>> # creates object in the example_collection collection and returns attributes
+        {'active':True,'id':'example_id', 'product_id':'example_product_id',
+            'audience_id':'example_audience_id'}
+        >>> # to use batch mode, create a firestore client and initiate batch mode
+        >>> batch = create_db_client(refresh=False).batch()
+
+    """
+
     from stratus_api.core.common import generate_random_id, generate_hash_id
     from stratus_api.document.utilities import generate_collection_firestore_name
     from stratus_api.document.base import create_db_client

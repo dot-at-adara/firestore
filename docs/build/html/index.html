@@ -1,0 +1,614 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to stratus_api_document’s documentation! &#8212; stratus_api_document 0.0.5 documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">stratus_api_document 0.0.5 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to stratus_api_document’s documentation!</a></li>
+<li><a class="reference internal" href="#module-stratus_api.document.base">stratus_api_document base</a><ul>
+<li><a class="reference internal" href="#base-py">base.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stratus_api.document.create">stratus_api_document create</a><ul>
+<li><a class="reference internal" href="#create-py">create.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stratus_api.document.get">stratus_api_document get</a><ul>
+<li><a class="reference internal" href="#get-py">get.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stratus_api.document.update">stratus_api_document update</a><ul>
+<li><a class="reference internal" href="#update-py">update.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-stratus_api.document.utilities">stratus_api_document utilities</a><ul>
+<li><a class="reference internal" href="#utilities-py">utilities.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-stratus-api-document-s-documentation">
+<h1>Welcome to stratus_api_document’s documentation!<a class="headerlink" href="#welcome-to-stratus-api-document-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="module-stratus_api.document.base">
+<span id="stratus-api-document-base"></span><h1>stratus_api_document base<a class="headerlink" href="#module-stratus_api.document.base" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="base-py">
+<h2>base.py<a class="headerlink" href="#base-py" title="Permalink to this headline">¶</a></h2>
+<p>The base module of stratus_api document package provides convenience functions to create firestore client, indices and compound indices.</p>
+<dl class="py function">
+<dt id="stratus_api.document.base.create_compound_indices">
+<code class="sig-prename descclassname">stratus_api.document.base.</code><code class="sig-name descname">create_compound_indices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app_settings</span></em>, <em class="sig-param"><span class="n">collections</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.base.create_compound_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to create compound indices for collections</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collections</strong> (<em>list</em>) – list of dictionary of collections</p></li>
+<li><p><strong>app_settings</strong> (<em>dict</em>) – app_settings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>indices</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compound_indices</span> <span class="o">=</span> <span class="n">create_compound_indices</span><span class="p">(</span><span class="n">app_settings</span><span class="o">=</span><span class="n">app_settings</span><span class="p">,</span> <span class="n">collections</span><span class="o">=</span><span class="n">collections</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.base.create_db_client">
+<code class="sig-prename descclassname">stratus_api.document.base.</code><code class="sig-name descname">create_db_client</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">refresh</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.base.create_db_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to create a document client</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>refresh</strong> (<em>bool</em>) – set True to refresh db_client</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>document client</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">client</span> <span class="o">=</span> <span class="n">create_db_client</span><span class="p">(</span><span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>:raises</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.base.define_indices">
+<code class="sig-prename descclassname">stratus_api.document.base.</code><code class="sig-name descname">define_indices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collections</span></em>, <em class="sig-param"><span class="n">app_settings</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.base.define_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to define compound indices for a collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collections</strong> (<em>list</em>) – list of dictionary of collections</p></li>
+<li><p><strong>app_settings</strong> (<em>dict</em>) – app_settings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>indices</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">indices</span> <span class="o">=</span> <span class="n">define_indices</span><span class="p">(</span><span class="n">collections</span><span class="o">=</span><span class="n">collections</span><span class="p">,</span> <span class="n">app_settings</span><span class="o">=</span><span class="n">app_settings</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-stratus_api.document.create">
+<span id="stratus-api-document-create"></span><h1>stratus_api_document create<a class="headerlink" href="#module-stratus_api.document.create" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="create-py">
+<h2>create.py<a class="headerlink" href="#create-py" title="Permalink to this headline">¶</a></h2>
+<p>The create module of stratus_api document provides function to create a document in firestore collection</p>
+<dl class="py function">
+<dt id="stratus_api.document.create.create_object">
+<code class="sig-prename descclassname">stratus_api.document.create.</code><code class="sig-name descname">create_object</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">unique_keys</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">hash_id</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">batch</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">message_formatter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">user_id</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.create.create_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates a document object in firestore collection_name with also having optional functionality to batch create</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – example_collection</p></li>
+<li><p><strong>unique_keys</strong> – list of keys that needs to be unique for a collection</p></li>
+<li><p><strong>attributes</strong> – dictionary attributes object</p></li>
+<li><p><strong>hash_id</strong> – True if document id needs to be hash of unique_keys</p></li>
+<li><p><strong>batch</strong> – firestore batch object to create objects in batch mode</p></li>
+<li><p><strong>message_formatter</strong> – </p></li>
+<li><p><strong>user_id</strong> – </p></li>
+<li><p><strong>full_collection_name</strong> – True if collection_name is an absolute name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>attributes</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – object already exists</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">attributes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;example_id&#39;</span><span class="p">,</span> <span class="n">product_id</span><span class="o">=</span><span class="s1">&#39;example_product_id&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                  <span class="n">audience_id</span><span class="o">=</span><span class="s1">&#39;example_audience_id&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">create_object</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span><span class="n">unique_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="s1">&#39;product_id&#39;</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">,</span> <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># creates object in the example_collection collection and returns attributes</span>
+<span class="go">{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id&#39;, &#39;product_id&#39;:&#39;example_product_id&#39;,</span>
+<span class="go">    &#39;audience_id&#39;:&#39;example_audience_id&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># to use batch mode, create a firestore client and initiate batch mode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="n">create_db_client</span><span class="p">(</span><span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-stratus_api.document.get">
+<span id="stratus-api-document-get"></span><h1>stratus_api_document get<a class="headerlink" href="#module-stratus_api.document.get" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="get-py">
+<h2>get.py<a class="headerlink" href="#get-py" title="Permalink to this headline">¶</a></h2>
+<p>The get module of of stratus_api document provides convenience functions to get objects from the firestore collections</p>
+<dl class="py function">
+<dt id="stratus_api.document.get.apply_filters">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">apply_filters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc_ref</span></em>, <em class="sig-param"><span class="n">test_ref</span></em>, <em class="sig-param"><span class="n">filters</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">active</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.apply_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that applies firestore filters such as ==, &lt;, &gt;=, &lt;=, in, array_contains, array_contains_any for the query</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doc_ref</strong> (<em>object</em>) – doc_ref object</p></li>
+<li><p><strong>test_ref</strong> (<em>object</em>) – test_ref object</p></li>
+<li><p><strong>filters</strong> (<em>dict</em>) – {‘eq_active’:True, ‘eq_id’:’example_id’, ‘gte_created’:’05-27-2020’}</p></li>
+<li><p><strong>active</strong> (<em>bool</em>) – True to get all the document that has active flag set to True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>doc_ref(object), test_ref(object), filters(dict)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document.base</span> <span class="kn">import</span> <span class="n">create_db_client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document.utilities</span> <span class="kn">import</span> <span class="n">generate_collection_firestore_name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">create_db_client</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc_ref</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">collection</span><span class="p">(</span><span class="n">generate_collection_firestore_name</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                        <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test_ref</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;eq_active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;eq_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc_ref</span><span class="p">,</span> <span class="n">test_ref</span><span class="p">,</span> <span class="n">filters</span> <span class="o">=</span> <span class="n">apply_filters</span><span class="p">(</span><span class="n">doc_ref</span><span class="o">=</span><span class="n">doc_ref</span><span class="p">,</span> <span class="n">test_ref</span><span class="o">=</span><span class="n">test_ref</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                           <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.get.get_all_objects">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">get_all_objects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">active</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">limit</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.get_all_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to get list of all objects under collection_name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> – example_collection</p></li>
+<li><p><strong>active</strong> – True to get all the document that has active flag set to True</p></li>
+<li><p><strong>limit</strong> – number of objects in a single call</p></li>
+<li><p><strong>full_collection_name</strong> – True if collection_name is an absolute name</p></li>
+<li><p><strong>kwargs</strong> – eq_id for get object that equals to id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of dictionary of objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">get_all_objects</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span><span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                          <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+<span class="go">[{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id1&#39;, &#39;product_id&#39;:&#39;example_product_id1&#39;,</span>
+<span class="go">    &#39;audience_id&#39;:&#39;example_audience_id1&#39;},</span>
+<span class="go">{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id2&#39;, &#39;product_id&#39;:&#39;example_product_id2&#39;,</span>
+<span class="go">    &#39;audience_id&#39;:&#39;example_audience_id2&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">))</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.get.get_cursor">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">get_cursor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cursor_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">active</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">filters</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.get_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns cursor document from the cursors collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cursor_id</strong> (<em>str</em>) – document id under cursors collection</p></li>
+<li><p><strong>active</strong> (<em>bool</em>) – True to get all the document that has active flag set to True</p></li>
+<li><p><strong>sort_keys</strong> (<em>list</em>) – sort objects according to keys</p></li>
+<li><p><strong>filters</strong> (<em>dict</em>) – {‘eq_active’:True, ‘eq_id’:’example_id’, ‘gte_created’:’05-27-2020’}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cursor firestore document</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cursor_id</span> <span class="o">=</span> <span class="s1">&#39;7d619685-e7a0-44ac-b635-random_id&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;eq_active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;eq_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cursor</span> <span class="o">=</span> <span class="n">get_cursor</span><span class="p">(</span><span class="n">cursor_id</span><span class="o">=</span><span class="n">cursor_id</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cursor</span><span class="p">)</span>
+<span class="go">{&#39;active&#39;:True,&#39;collection_name&#39;:&#39;example_collection&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.get.get_objects">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">get_objects</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">active</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">limit</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">10</span></em>, <em class="sig-param"><span class="n">cursor_id</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">create_cursor</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="p">:</span> <span class="n">list</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">page</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.get_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to get list of objects under collection_name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> (<em>str</em>) – example_collection</p></li>
+<li><p><strong>active</strong> (<em>bool</em>) – True to get all the document that has active flag set to True</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – number of objects in a single call</p></li>
+<li><p><strong>cursor_id</strong> (<em>str</em>) – paginate queries by using cursors</p></li>
+<li><p><strong>create_cursor</strong> (<em>bool</em>) – True if needed to create a pagination for the query</p></li>
+<li><p><strong>sort_keys</strong> (<em>list</em>) – sort objects according to keys</p></li>
+<li><p><strong>page</strong> (<em>int</em>) – page_number</p></li>
+<li><p><strong>full_collection_name</strong> (<em>str</em>) – True if collection_name is an absolute name</p></li>
+<li><p><strong>kwargs</strong> – eq_id for get object that equals to id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of dictionary of objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">get_objects</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span><span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                      <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+<span class="go">[{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id1&#39;, &#39;product_id&#39;:&#39;example_product_id1&#39;,</span>
+<span class="go">    &#39;audience_id&#39;:&#39;example_audience_id1&#39;},</span>
+<span class="go">{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id2&#39;, &#39;product_id&#39;:&#39;example_product_id2&#39;,</span>
+<span class="go">    &#39;audience_id&#39;:&#39;example_audience_id2&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">))</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.get.handle_sort">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">handle_sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc_ref</span></em>, <em class="sig-param"><span class="n">test_ref</span></em>, <em class="sig-param"><span class="n">filters</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.handle_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs order_by clause on the query</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doc_ref</strong> (<em>object</em>) – doc_ref object</p></li>
+<li><p><strong>test_ref</strong> (<em>object</em>) – test_ref object</p></li>
+<li><p><strong>filters</strong> (<em>dict</em>) – {‘eq_active’:True, ‘eq_id’:’example_id’, ‘gte_created’:’05-27-2020’}</p></li>
+<li><p><strong>collection_name</strong> (<em>str</em>) – example_collection</p></li>
+<li><p><strong>sort_keys</strong> (<em>list</em>) – sort objects according to keys</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>doc_ref(object), test_ref(object), filters(dict)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document.base</span> <span class="kn">import</span> <span class="n">create_db_client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document.utilities</span> <span class="kn">import</span> <span class="n">generate_collection_firestore_name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">create_db_client</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc_ref</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">collection</span><span class="p">(</span><span class="n">generate_collection_firestore_name</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                        <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test_ref</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;eq_active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;eq_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc_ref</span><span class="p">,</span> <span class="n">test_ref</span><span class="p">,</span> <span class="n">sort_keys</span> <span class="o">=</span> <span class="n">handle_sort</span><span class="p">(</span><span class="n">doc_ref</span><span class="o">=</span><span class="n">doc_ref</span><span class="p">,</span> <span class="n">test_ref</span><span class="o">=</span><span class="n">test_ref</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                                              <span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.get.update_cursor">
+<code class="sig-prename descclassname">stratus_api.document.get.</code><code class="sig-name descname">update_cursor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">active</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">sort_keys</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">filters</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">last_object</span><span class="p">:</span> <span class="n">dict</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cursor_id</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">page</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.get.update_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to create/update cursor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> (<em>str</em>) – example_collection</p></li>
+<li><p><strong>active</strong> (<em>bool</em>) – True to get all the document that has active flag set to True</p></li>
+<li><p><strong>sort_keys</strong> (<em>list</em>) – sort objects according to keys</p></li>
+<li><p><strong>filters</strong> (<em>dict</em>) – {‘eq_active’:True, ‘eq_id’:’example_id’, ‘gte_created’:’05-27-2020’}</p></li>
+<li><p><strong>last_object</strong> (<em>dict</em>) – last fetched document object</p></li>
+<li><p><strong>cursor_id</strong> (<em>str</em>) – paginate queries by using cursor_id</p></li>
+<li><p><strong>page</strong> (<em>int</em>) – page number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cursor_id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">last_object</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id1&#39;</span><span class="p">,</span> <span class="s1">&#39;product_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_product_id1&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>               <span class="s1">&#39;audience_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_audience_id1&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;eq_active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;eq_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cursor_id</span> <span class="o">=</span> <span class="n">update_cursor</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                          <span class="n">last_object</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cursor_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                          <span class="n">sort_keys</span><span class="o">=</span><span class="n">sort_keys</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cursor_id</span><span class="p">)</span>
+<span class="go">&#39;7d619685-e7a0-44ac-b635-random_id&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-stratus_api.document.update">
+<span id="stratus-api-document-update"></span><h1>stratus_api_document update<a class="headerlink" href="#module-stratus_api.document.update" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="update-py">
+<h2>update.py<a class="headerlink" href="#update-py" title="Permalink to this headline">¶</a></h2>
+<p>The update module of stratus_api document provides function to update/delete a document in firestore collection</p>
+<dl class="py function">
+<dt id="stratus_api.document.update.delete_object">
+<code class="sig-prename descclassname">stratus_api.document.update.</code><code class="sig-name descname">delete_object</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">object_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">batch</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">user_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.update.delete_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>deactivates the document under the collection
+:param collection_name: example_collection
+:param object_id: document id
+:param batch: firestore batch object to delete objects in batch
+:param user_id:
+:param full_collection_name: True if collection_name is an absolute name
+:return: results</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.update.format_update_message">
+<code class="sig-prename descclassname">stratus_api.document.update.</code><code class="sig-name descname">format_update_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.update.format_update_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>formats attributes according to the firestore body format
+:param attributes: dicionary of attributes
+:type attributes: dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>firestore compatible request_body format</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id1&#39;</span><span class="p">,</span> <span class="s1">&#39;segments&#39;</span><span class="p">:{</span><span class="s1">&#39;segment_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_segment_id&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">format_update_message</span><span class="p">(</span><span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">))</span>
+<span class="go">{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id1&#39;, &#39;segments.segment_id&#39;:&#39;example_segment_id&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.update.update_object">
+<code class="sig-prename descclassname">stratus_api.document.update.</code><code class="sig-name descname">update_object</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">object_id</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">batch</span><span class="p">:</span> <span class="n">object</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">message_formatter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">user_id</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">upsert</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">override</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">overwrite_updated</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.update.update_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>updates the document in the collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection_name</strong> (<em>str</em>) – example_collection</p></li>
+<li><p><strong>object_id</strong> (<em>str</em>) – document id</p></li>
+<li><p><strong>attributes</strong> (<em>dict</em>) – dictionary of attributes</p></li>
+<li><p><strong>batch</strong> (<em>object</em>) – firestore batch object to update objects in batch</p></li>
+<li><p><strong>(</strong><strong>)</strong> (<em>message_formatter</em>) – </p></li>
+<li><p><strong>user_id</strong> (<em>str</em>) – </p></li>
+<li><p><strong>upsert</strong> (<em>bool</em>) – True for update/create a object</p></li>
+<li><p><strong>override</strong> (<em>bool</em>) – True if the document needs to be over written</p></li>
+<li><p><strong>overwrite_updated</strong> (<em>bool</em>) – True if updated flag does not need to be updated</p></li>
+<li><p><strong>full_collection_name</strong> (<em>bool</em>) – True if collection_name is an absolute name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>attributes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document</span> <span class="kn">import</span> <span class="n">create_object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;active&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;example_id&#39;</span><span class="p">,</span> <span class="s1">&#39;segments&#39;</span><span class="p">:{</span><span class="s1">&#39;segment_id&#39;</span><span class="p">:</span><span class="s1">&#39;example_segment_id&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="n">create_object</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">unique_keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                    <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_attributes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sub_object</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">attributes_3</span><span class="o">=</span><span class="s1">&#39;New attributes&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">updated_obj</span> <span class="o">=</span> <span class="n">update_object</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                            <span class="n">object_id</span><span class="o">=</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">attributes</span><span class="o">=</span><span class="n">update_attributes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">updated_obj</span><span class="p">)</span>
+<span class="go">{&#39;active&#39;:True,&#39;id&#39;:&#39;example_id&#39;, &#39;segments&#39;:{&#39;segment_id&#39;:&#39;example_segment_id&#39;},</span>
+<span class="go">&#39;sub_object&#39;: {&#39;attributes_3&#39;:&#39;New attributes&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-stratus_api.document.utilities">
+<span id="stratus-api-document-utilities"></span><h1>stratus_api_document utilities<a class="headerlink" href="#module-stratus_api.document.utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="utilities-py">
+<h2>utilities.py<a class="headerlink" href="#utilities-py" title="Permalink to this headline">¶</a></h2>
+<p>The utilities module of stratus_api document provides support functions for create, update, get modules</p>
+<dl class="py function">
+<dt id="stratus_api.document.utilities.delete_collection_documents">
+<code class="sig-prename descclassname">stratus_api.document.utilities.</code><code class="sig-name descname">delete_collection_documents</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.utilities.delete_collection_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to delete all the documents under the collection and the collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> (<em>str</em>) – example_collection</p></li>
+<li><p><strong>full_collection_name</strong> (<em>bool</em>) – True if collection_name is an absolute name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_collection_documents</span><span class="p">(</span><span class="n">collection</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span> <span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.utilities.generate_collection_firestore_name">
+<code class="sig-prename descclassname">stratus_api.document.utilities.</code><code class="sig-name descname">generate_collection_firestore_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">collection_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">full_collection_name</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.utilities.generate_collection_firestore_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates firestore collection name with respect to the service and environment
+:param collection_name: example_collection
+:type collection_name: str
+:param prefix: random value if collection is a test collection
+:type prefix: str
+:param full_collection_name: True if collection_name is an absolute name
+:type full_collection_name: bool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>string of collection name</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">generate_collection_firestore_name</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">,</span><span class="n">full_collection_name</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="go">&#39;example_service-test-example_collection&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="stratus_api.document.utilities.manage_retries">
+<code class="sig-prename descclassname">stratus_api.document.utilities.</code><code class="sig-name descname">manage_retries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">partial_function</span></em>, <em class="sig-param"><span class="n">handled_exceptions</span><span class="p">:</span> <span class="n">list</span></em>, <em class="sig-param"><span class="n">propagate_exceptions</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">retries</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">backoff</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#stratus_api.document.utilities.manage_retries" title="Permalink to this definition">¶</a></dt>
+<dd><p>retry function to perform retries</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>partial_function</strong> (<em>func</em>) – example: doc_ref.get</p></li>
+<li><p><strong>handled_exceptions</strong> (<em>list</em>) – [ServiceUnavailable]</p></li>
+<li><p><strong>propagate_exceptions</strong> (<em>boolean</em>) – boolean</p></li>
+<li><p><strong>retries</strong> (<em>int</em>) – number of retries</p></li>
+<li><p><strong>backoff</strong> (<em>bool</em>) – exponential backoff</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>results (function output)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stratus_api.document.base</span> <span class="kn">import</span> <span class="n">create_db_client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">google.cloud.exceptions</span> <span class="kn">import</span> <span class="n">ServiceUnavailable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="n">create_db_client</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc_ref</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">collection</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;example_collection&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">manage_retries</span><span class="p">(</span><span class="n">partial_function</span><span class="o">=</span><span class="n">doc_ref</span><span class="o">.</span><span class="n">get</span><span class="p">,</span> <span class="n">handled_exceptions</span><span class="o">=</span><span class="p">[</span><span class="n">ServiceUnavailable</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>                                 <span class="n">retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">propagate_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">stratus_api_document 0.0.5 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, dot@adara.com.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.4.
+    </div>
+  </body>
+</html>

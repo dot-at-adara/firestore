@@ -1,10 +1,23 @@
+"""
+base.py
+====================================
+The base module of stratus_api document package provides convenience functions to create firestore client, indices and compound indices.
+"""
 __db_client__ = None
 
 
-def create_db_client(refresh=False):
+def create_db_client(refresh: bool = False):
     """Convenience function to create a document client
 
-    :return: document client
+    Args:
+        refresh (bool): set True to refresh db_client
+
+    Returns:
+        object: document client
+    Examples:
+        >>> client = create_db_client(refresh=False)
+    :raises
+
     """
     from stratus_api.core.settings import get_app_settings
     from google.cloud import firestore
@@ -17,6 +30,17 @@ def create_db_client(refresh=False):
 
 
 def define_indices(collections, app_settings):
+    """
+    Convenience function to define compound indices for a collection
+
+    Args:
+        collections (list): list of dictionary of collections
+        app_settings (dict): app_settings
+    Returns:
+        list: indices
+    Examples:
+        >>> indices = define_indices(collections=collections, app_settings=app_settings)
+    """
     from stratus_api.document.utilities import generate_collection_firestore_name
     indices = list()
     for collection in collections.values():
@@ -34,6 +58,17 @@ def define_indices(collections, app_settings):
 
 
 def create_compound_indices(app_settings, collections):
+    """
+    Convenience function to create compound indices for collections
+
+    Args:
+        collections (list): list of dictionary of collections
+        app_settings (dict): app_settings
+    Returns:
+        list: indices
+    Examples:
+        >>> compound_indices = create_compound_indices(app_settings=app_settings, collections=collections)
+    """
     import json, os
     with open('.firebaserc', 'wt') as f:
         json.dump(dict(projects=dict(default=app_settings['project_id'])), f)
